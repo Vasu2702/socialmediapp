@@ -1,133 +1,70 @@
-Stable Diffusion Image Generation
-This project uses the Stable Diffusion model from the diffusers library and the GPT-2 model from the transformers library to generate images based on textual prompts. The code initializes the models, sets up configuration parameters, and includes a function to generate images.
+# Getting Started with Create React App
 
-Requirements
-Python 3.6+
-PyTorch
-diffusers
-transformers
-tqdm
-pandas
-numpy
-matplotlib
-opencv-python
-Installation
-Clone the repository:
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-bash
-Copy code
-git clone https://github.com/yourusername/stable-diffusion-image-gen.git
-cd stable-diffusion-image-gen
-Install the required packages:
+## Available Scripts
 
-bash
-Copy code
-pip install --upgrade diffusers transformers tqdm pandas numpy matplotlib opencv-python
-Configuration
-The CFG class defines the configuration parameters for the project:
+In the project directory, you can run:
 
-device: The device to run the model on (cuda if available, otherwise cpu).
-seed: The random seed for reproducibility.
-generator: A PyTorch generator for reproducibility.
-image_gen_steps: The number of inference steps for image generation.
-image_gen_model_id: The identifier for the image generation model.
-image_gen_size: The size of the generated image.
-image_gen_guidance_scale: The guidance scale for the image generation model.
-prompt_gen_model_id: The identifier for the prompt generation model.
-prompt_dataset_size: The size of the prompt dataset.
-prompt_max_length: The maximum length of the prompts.
-Usage
-Initialize the Stable Diffusion model:
+### `npm start`
 
-python
-Copy code
-from diffusers import StableDiffusionPipeline
-from transformers import pipeline, set_seed
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-class CFG:
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    seed = 42
-    generator = torch.Generator(device).manual_seed(seed)
-    image_gen_steps = 35
-    image_gen_model_id = "stabilityai/stable-diffusion-2"
-    image_gen_size = (400, 400)
-    image_gen_guidance_scale = 9
-    prompt_gen_model_id = "gpt2"
-    prompt_dataset_size = 6
-    prompt_max_length = 12
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-image_gen_model = StableDiffusionPipeline.from_pretrained(
-    CFG.image_gen_model_id, torch_dtype=torch.float16,
-    revision="fp16", use_auth_token='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',
-    guidance_scale=CFG.image_gen_guidance_scale
-)
-image_gen_model = image_gen_model.to(CFG.device)
-Define a function to generate images:
+### `npm test`
 
-python
-Copy code
-from PIL import Image
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-def generate_image(prompt, model):
-    image = model(
-        prompt, num_inference_steps=CFG.image_gen_steps,
-        generator=CFG.generator,
-        guidance_scale=CFG.image_gen_guidance_scale
-    ).images[0]
-    
-    image = image.resize(CFG.image_gen_size)
-    return image
-Generate an image:
+### `npm run build`
 
-python
-Copy code
-prompt = "two trains colliding"
-image = generate_image(prompt, image_gen_model)
-image.show()
-Example
-Here is an example of generating an image with the prompt "two trains colliding":
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-python
-Copy code
-!pip install --upgrade diffusers transformers -q
-from pathlib import Path
-import tqdm
-import torch
-import pandas as pd
-import numpy as np
-from diffusers import StableDiffusionPipeline
-from transformers import pipeline, set_seed
-import matplotlib.pyplot as plt
-import cv2
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-class CFG:
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    seed = 42
-    generator = torch.Generator(device).manual_seed(seed)
-    image_gen_steps = 35
-    image_gen_model_id = "stabilityai/stable-diffusion-2"
-    image_gen_size = (400,400)
-    image_gen_guidance_scale = 9
-    prompt_gen_model_id = "gpt2"
-    prompt_dataset_size = 6
-    prompt_max_length = 12
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-image_gen_model = StableDiffusionPipeline.from_pretrained(
-    CFG.image_gen_model_id, torch_dtype=torch.float16,
-    revision="fp16", use_auth_token='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',
-    guidance_scale=CFG.image_gen_guidance_scale
-)
-image_gen_model = image_gen_model.to(CFG.device)
+### `npm run eject`
 
-def generate_image(prompt, model):
-    image = model(
-        prompt, num_inference_steps=CFG.image_gen_steps,
-        generator=CFG.generator,
-        guidance_scale=CFG.image_gen_guidance_scale
-    ).images[0]
-    
-    image = image.resize(CFG.image_gen_size)
-    return image
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-generate_image("two trains colliding", image_gen_model)
-This will generate and display an image based on the provided prompt.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
